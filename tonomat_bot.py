@@ -56,7 +56,7 @@ async def shop(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     message = "Available products:\n" + "\n".join([f"ID {id}: {desc} - {price} BTC" for id, desc, price in items])
     logger.info("Sending shop items to user %s", update.effective_user.id)
     # Use raw GitHub URL for the image (adjust path if needed)
-    image_url = 'photos/PozaShopnow.jpg'
+    image_url = 'https://raw.githubusercontent.com/FrankySolAnalyst/Tonomat2.0/main/photos/PozaShopnow.jpg'
     try:
         await context.bot.send_photo(
             chat_id=update.effective_chat.id,
