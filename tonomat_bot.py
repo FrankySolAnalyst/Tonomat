@@ -17,7 +17,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS profiles
 conn.commit()
 
 # Bot token from @BotFather
-API_TOKEN = '8212040328:AAFCdgK0mto6pTAihGMkeMNqaIwCuPApqi8'  # Replace with your actual token
+API_TOKEN = '8212040328:AAFCdgK0mto6pTAihGMkeMNqaIwCuPApqi8EN'  # Replace with your actual token
 
 # Define custom keyboard
 def get_custom_keyboard():
@@ -55,13 +55,18 @@ async def shop(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         return
     message = "Available products:\n" + "\n".join([f"ID {id}: {desc} - {price} BTC" for id, desc, price in items])
     logger.info("Sending shop items to user %s", update.effective_user.id)
-    # Send the image using a local file with raw string
-    with open(r'C:\Users\Consilo Web\Desktop\Tonomatbot\Photos\stable-diffusion-xl-base-10_an-alchemist-in-a.jfif', 'rb') as photo:
-        await update.message.reply_photo(
-            photo=photo,
+    # Use raw GitHub URL for the image (adjust path if needed)
+    image_url = 'https://raw.githubusercontent.com/FrankySolAnalyst/Tonomat/main/Photos/C:\Users\Consilo Web\Desktop\Tonomatbot\Tonomat\photos\PozaShopnow.jpg'
+    try:
+        await context.bot.send_photo(
+            chat_id=update.effective_chat.id,
+            photo=image_url,
             caption="Shop-ul dacic 🌿🏛️✨\n" + message,
             reply_markup=get_custom_keyboard()
         )
+    except Exception as e:
+        logger.error("Error sending photo from GitHub: %s", str(e))
+        await update.message.reply_text("Error loading shop image. 😞\n" + message, reply_markup=get_custom_keyboard())
 
 async def sell(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.effective_user.id
@@ -117,7 +122,7 @@ async def deposit(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         reply_markup=get_custom_keyboard()
     )
 
-async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     logger.info("Help command triggered by user %s", update.effective_user.id)
     await update.message.reply_text(
         "AnonMarket Tutorials:\n"
@@ -165,7 +170,7 @@ async def handle_menu_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE
     elif text == "💰 Deposit":
         await deposit(update, context)
     elif text == "❓ Help":
-        await help(update, context)
+        await help_command(update, context)
     elif text == "📰 News":
         await news(update, context)
     elif text == "🚨 SOS":
@@ -197,7 +202,7 @@ def main() -> None:
         application.add_handler(CommandHandler("sell", sell))
         application.add_handler(CommandHandler("profile", profile))
         application.add_handler(CommandHandler("deposit", deposit))
-        application.add_handler(CommandHandler("help", help))
+        application.add_handler(CommandHandler("help", help_command))
         application.add_handler(CommandHandler("news", news))
         application.add_handler(CommandHandler("sos", sos))
         application.add_handler(CommandHandler("relatiiclienti", relatiiclienti))
