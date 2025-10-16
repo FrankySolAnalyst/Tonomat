@@ -1,5 +1,14 @@
-*.db
-venv/
+# Secrets and env
 *.token
+.env
+
+# Database
+*.db
+
+# Python cache
 __pycache__/
 *.pyc
+
+# Virtual env
+venv/
+env/
