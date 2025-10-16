@@ -17,7 +17,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS profiles
 conn.commit()
 
 # Bot token from @BotFather
-API_TOKEN = '8212040328:AAFCdgK0mto6pTAihGMkeMNqaIwCuPApqi8EN'  # Replace with your actual token
+API_TOKEN = '8212040328:AAGiWDNMr22m9ctr88VDo6xBmgTtQNvCXVM'  # Replace with your actual token
 
 # Define custom keyboard
 def get_custom_keyboard():
@@ -56,7 +56,7 @@ async def shop(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     message = "Available products:\n" + "\n".join([f"ID {id}: {desc} - {price} BTC" for id, desc, price in items])
     logger.info("Sending shop items to user %s", update.effective_user.id)
     # Use raw GitHub URL for the image (adjust path if needed)
-    image_url = 'https://raw.githubusercontent.com/FrankySolAnalyst/Tonomat/main/Photos/C:\Users\Consilo Web\Desktop\Tonomatbot\Tonomat\photos\PozaShopnow.jpg'
+    image_url = 'https://raw.githubusercontent.com/FrankySolAnalyst/Tonomat/main/Photos/PozaShopnow.jpg'
     try:
         await context.bot.send_photo(
             chat_id=update.effective_chat.id,
